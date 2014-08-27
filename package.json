@@ -1,0 +1,42 @@
+{
+  "name": "SPNLogger",
+  "version": "0.0.1",
+  "description": "My logger for SPNL related stuff.",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antonhedstrom/node-spnl-logger.git"
+  },
+  "keywords": [
+    "spnl",
+    "logger"
+  ],
+  "author": "Anton Hedström",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antonhedstrom/node-spnl-logger/issues"
+  },
+  "homepage": "https://github.com/antonhedstrom/node-spnl-logger",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-qunit": "^0.5.2",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.6.6",
+    "express": "^4.8.5",
+    "morgan": "^1.2.3",
+    "multer": "^0.1.4",
+    "serve-static": "^1.5.3"
+  }
+}
