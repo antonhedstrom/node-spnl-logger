@@ -16,7 +16,12 @@ module.exports = function(grunt) {
         separator: ';'
       },
       jslibs: {
-        src: ['<%=dirs.libs%>/*.js'],
+        src: [
+          '<%=dirs.libs%>/jquery-2.1.1.min.js',
+          '<%=dirs.libs%>/underscore.js',
+          '<%=dirs.libs%>/backbone.js',
+          '<%=dirs.libs%>/backbone.marionette.js'
+        ],
         dest: '<%=dirs.libs%>/_libs.combined.js'
       }
     },

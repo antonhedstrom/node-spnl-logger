@@ -3,20 +3,33 @@
  */
 
 var express = require('express'),
-    indexRoutes = require('./routes/index'),
-    userRoutes = require('./routes/user'),
+    settings = require('./settings'),
+    routes = require('./routes/'),
     http = require('http'),
     path = require('path'),
     bodyParser = require('body-parser'),
     multer = require('multer'),
     morgan  = require('morgan'),
-    serveStatic = require('serve-static');
+    serveStatic = require('serve-static'),
+    mongoose = require('mongoose'),
+    colors = require('colors');
 
+
+// MONGODB
+/* Not used at the moment
+
+mongoose.connect('mongodb://'+settings.db.mongo.url+'/'+settings.db.mongo.name);
+var mongodb = mongoose.connection;
+mongodb.on('error', console.error.bind(console, 'connection error:'.red));
+mongodb.once('open', function callback () {
+  console.log(('Successfully connected to mongodb://' + settings.db.mongo.url).green);
+});
+*/
 
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || settings.app.port || 3000);
 app.set('views', process.cwd() + '/views');
 app.set('view engine', 'jade');
 
@@ -38,11 +51,8 @@ app.use(
   })
 );
 
-
-
-app.use('/', indexRoutes);
-app.use('/users', userRoutes);
+app.use(routes);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log(('Express server listening on port ' + app.get('port')).green);
 });
