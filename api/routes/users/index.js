@@ -1,48 +1,22 @@
 var express = require('express'),
-    router = express.Router(),
-    mysql = require('./../../my-mysql-connection'),
-    find = require('array.prototype.find');
+    router = express.Router();
+
 
 router.get('/', function(req, res) {
-  mysql.query('SELECT * FROM user', function(err, users) {
-    if ( err ) {
-      return res.status(500).send(err);
-    }
-
-    users.forEach(function(user) {
-      user.pwd = undefined;
-    });
-
+  var DB = req.app.get('DB');
+  DB.User.fetchAll().then(function(users) {
     res.send(users);
   });
 });
 
 router.post('/', function(req, res) {
-  var user = {
-    name: req.body.name,
-    id: id++
-  };
-  users.push(user);
-
-  res.send(user);
+  console.log('Not implemented yet');
+  res.send('Not implemented yet');
 });
 
 router.put('/:id', function(req, res) {
-  var id = parseInt(req.params.id, 10);
-  var user = users.find(function(user) {
-    return id === user.id;
-  });
-
-  if ( user && req.body.name) {
-    user.name = req.body.name;
-    res.send(user);
-  }
-  else {
-    res.status(404).send({msg: 'User not found.'});
-  }
-
+  console.log('Not implemented yet');
+  res.send('Not implemented yet');
 });
-
-
 
 module.exports = router;

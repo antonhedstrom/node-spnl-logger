@@ -1,7 +1,6 @@
 require.config({
   baseUrl: "/assets/js",
   paths: {
-    app: "app/app",
     backbone: "libs/backbone",
     underscore: "libs/underscore",
     jquery: "libs/jquery-2.1.1.min",
@@ -44,7 +43,7 @@ require.config({
 
 // Fire things up!
 require([
-  'app',
+  'app/app',
   'bootstrap'
 ], function(
   Application

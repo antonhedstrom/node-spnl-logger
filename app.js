@@ -3,56 +3,87 @@
  */
 
 var express = require('express'),
-    settings = require('./settings'),
-    routes = require('./routes/'),
     http = require('http'),
     path = require('path'),
-    bodyParser = require('body-parser'),
     multer = require('multer'),
+    colors = require('colors'),
+    passport = require('passport'),
+    connectFlash = require('connect-flash'),
+
+    // https://github.com/senchalabs/connect#middleware
+    // Official support from Express team:
     morgan  = require('morgan'),
+    bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
-    mongoose = require('mongoose'),
-    colors = require('colors');
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
 
+    // Local files:
+    settings = require('./settings'),
+    db = require('./api/database-connection'),
+    routes = require('./routes/');
 
-// MONGODB
-/* Not used at the moment
-
-mongoose.connect('mongodb://'+settings.db.mongo.url+'/'+settings.db.mongo.name);
-var mongodb = mongoose.connection;
-mongodb.on('error', console.error.bind(console, 'connection error:'.red));
-mongodb.once('open', function callback () {
-  console.log(('Successfully connected to mongodb://' + settings.db.mongo.url).green);
-});
-*/
 
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || settings.app.port || 3000);
-app.set('views', process.cwd() + '/views');
-app.set('view engine', 'jade');
+// Wrapping config stuff in an IIFE
+(function configure() {
+  // all environments
+  app.set('port', process.env.PORT || settings.app.port || 3000);
+  app.set('views', process.cwd() + '/views');
+  app.set('view engine', 'jade');
 
-// Serve up public/ftp folder
-app.use(serveStatic('public', {'index': ['index.html']}));
+  // Serve up public/ftp folder
+  app.use(serveStatic('public', {'index': ['index.html']}));
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
-app.use(bodyParser.json());
-app.use(multer({ dest: './uploads/'}));
+  app.use(cookieParser());
+  app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+  app.use(bodyParser.json());
+  app.use(connectFlash());
 
-// Logger:
-app.use(
-  morgan('combined', {
-    skip: function (req, res) {
-      return res.statusCode < 400;
+  app.use(session({
+    secret: settings.app.session.secret,
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+      maxAge: settings.app.session.cookieAge
     }
-  })
-);
+  }));
+  // parse application/json
+  app.use(multer({ dest: './uploads/'}));
 
-app.use(routes);
+  // Passport
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log(('Express server listening on port ' + app.get('port')).green);
+  // Logger:
+  app.use(
+    morgan('dev', {
+      skip: function (req, res) {
+        return false; // res.statusCode < 400;
+      }
+    })
+  );
+
+  app.use(routes);
+})();
+
+// Connect to database
+db.connect(function(err, DB) {
+  if (err) {
+    console.log('Couldn\'t connect to database:'.red, err);
+  }
+  else {
+    console.log('Connected to database. Maybe.'.green);
+    app.set('DB', DB);
+
+    DB.User.createStrategies(passport);
+
+    // Start app!
+    http.createServer(app).listen(app.get('port'), function(){
+      console.log(('Express server listening on port ' + app.get('port')).green);
+    });
+  }
 });
+
+module.exports = app;

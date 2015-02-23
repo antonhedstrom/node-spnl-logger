@@ -57,6 +57,10 @@ define([
       }
 
       console.log('Login in', username, password);
+      $.post('/login', {
+        username: username,
+        password: password
+      });
     }
   });
 
