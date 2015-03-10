@@ -31,6 +31,10 @@ require.config({
       deps: [],
       exports: "Handlebars"
     },
+    bootstrap: {
+      deps: ['jquery'],
+      exports: "Bootstrap"
+    },
     drunkenparrot: {
       deps: ['jquery', 'bootstrap'],
       exports: "Drunkenparrot"
