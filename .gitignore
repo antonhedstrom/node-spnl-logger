@@ -27,5 +27,17 @@ node_modules
 # Sass cache folder
 .sass-cache
 
-# OSX 
+# OSX
 .DS_Store
+
+# CSS is being built from src folder.
+src/style/css_built
+public/assets/css
+public/assets/fonts
+
+# Drunken parrot combined script file is built with grunt.
+public/assets/js/libs/drunkenparrot.combined.js
+public/assets/js/libs/drunkenparrot.combined.min.js
+
+# Contains security stuff
+settings.js

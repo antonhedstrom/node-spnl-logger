@@ -1,0 +1,8 @@
+/* Shared CSS file for tools in debugging:
+   * show-grid
+
+I.e:
+<% if Rails.env.development? && Settings.show_grids %>
+  @import tools/show-grid
+<% end %>
+ */

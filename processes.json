@@ -4,7 +4,7 @@
       "name"             : "SPNL logger",
       "script"           : "app.js",
       "log_date_format"  : "YYYY-MM-DD HH:mm Z",
-      "watch"            : ["app.js", "api", "public", "routes"]
+      "watch"            : ["app.js", "api", "routes"]
     }
   ]
 }

@@ -1,0 +1,93 @@
+/*
+//------------------------------------------------------------
+// Bolton Boilerplate
+//
+// Anton Hedström, 2014
+// antonhedstrom@gmail.com
+//
+// DON'T PUT CSS INTO THIS FILE!!!
+// This file is responsible for importing the structered CSS files.
+// Therefore, no styling belongs here.
+//------------------------------------------------------------
+*/
+
+/* 1. VENDORS
+   * compass
+   * compass/layout
+   * susy
+   * ... other external css styles
+ */
+@import "1_vendor/all";
+
+
+/* 2. DEPENDENCIES:
+   * metrics
+   * typography
+   * colors
+   * themes
+
+Global used variables, mixins and functions
+*/
+@import "2_dependencies/all";
+
+
+/* 3. FOUNDATIONS:
+   * normalization
+   * base styles
+
+Plain old semantic HTML
+ */
+@import "3_foundation/all";
+
+
+/* 4. COMPONENTS:
+   * icons
+   * buttons
+   * toggles
+   * messages
+   * pagination
+
+Modular components and their states
+ */
+@import "4_components/all";
+
+
+/* 5. REGIONS:
+   * banner
+   * navigation
+   * complementary
+   * contentinfo
+
+Page regions, named after their class or role names
+ */
+@import "5_regions/all";
+
+
+/* 6. HELPERS:
+   * nonsemantic-classes
+   * placeholder-selectors
+
+Non-semantic helpers
+ */
+@import "6_helpers/all";
+
+
+/* 7. RESPONSIVNESS:
+   * mobile
+   * tablet
+   * screen
+
+Auto adjustments to type sizes, grids and images.
+ */
+@import "7_responsive/all";
+
+
+/* 8. TOOLS:
+   * show-grid
+
+I.e:
+<% if Rails.env.development? && Settings.show_grids %>
+  @import tools/show-grid
+<% end %>
+ */
+@import "8_tools/all";
