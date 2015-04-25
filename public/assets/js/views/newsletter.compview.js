@@ -90,20 +90,38 @@ define([
       }
     },
 
-    addNewsletter: function() {
+    addNewsletter: function(e) {
+      e.preventDefault();
+      e.stopPropagation();
       // TODO: Spara
       var data = {
         number: this.ui.inputNumber.val(),
         start_time: this.ui.inputDateStart.val(),
         end_time: this.ui.inputDateEnd.val(),
-        dateline: new Date(),
         comment: this.ui.inputDesc.val(),
-        cached: true,
-        price: 10
+        cached: true
       };
       console.log(data);
 
       this.collection.add(data, {at: 0});
+    },
+
+    onRender: function() {
+      var number = this.ui.inputNumber;
+      var dateStart = this.ui.inputDateStart;
+      var dateEnd = this.ui.inputDateEnd;
+      var latest = this.collection.at(0);
+
+      if ( _.isEmpty(number.val()) && latest ) {
+        number.val(latest.get('number') + 1);
+      }
+      if ( _.isEmpty(dateStart.val()) ) {
+        dateStart.val(new Date());
+      }
+      if ( _.isEmpty(dateEnd.val()) ) {
+        dateEnd.val(new Date());
+      }
+
     },
 
     destroy: function() {
