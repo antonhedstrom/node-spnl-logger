@@ -1,9 +1,7 @@
 define([
   'require',
   'marionette',
-  'backbone',
-
-  ''
+  'backbone'
 ], function(
   require,
   Marionette,
@@ -31,8 +29,6 @@ define([
       AppRouter
     ) {
       new AppRouter();
-
-
 
       Backbone.history.start({
         pushState: false
