@@ -95,6 +95,9 @@ router.get('/', function(req, res) {
       if ( constraints.orderBy ) {
         qb.orderBy(constraints.orderBy.field, constraints.orderBy.order);
       }
+
+      // Never fetch 'deleted' ones
+      qb.where({deleted: 0});
      })
     .fetchAll()
     .then(function(newsletters) {
@@ -103,7 +106,6 @@ router.get('/', function(req, res) {
 
 });
 
-
 // Get a specific newsletter
 router.get('/:id', function(req, res) {
   var DB = req.app.get('DB');
@@ -111,12 +113,12 @@ router.get('/:id', function(req, res) {
 
   // isNumber returns true for NaN so both checks needed.
   if ( !_.isNumber(newsletterId) || _.isNaN(newsletterId) ) {
-    return res.status(404).send({msg: 'Can\'t find id: ' + newsletterId});
+    return res.status(404).send({msg: 'Required parameter id missing. Got: (' + newsletterId + ').'});
   }
 
   DB.Newsletter
-    .forge({id: newsletterId})
-    .fetch()
+    .forge({id: newsletterId, deleted: 0})
+    .fetch({require: true})
     .then(function(newsletter) {
       if ( _.isEmpty(newsletter) ) {
         res.status(404).send({msg: 'Can\'t find id: ' + newsletterId});
@@ -128,9 +130,30 @@ router.get('/:id', function(req, res) {
 });
 
 
-router.post('/', function(req, res) {
+// 'Delete' existing. Actually updates the 'deleted' attribute.
+router.delete('/:id', function(req, res) {
+  var DB = req.app.get('DB');
+  var newsletterId = parseInt(req.params.id, 10);
+
+  // isNumber returns true for NaN so both checks needed.
+  if ( !_.isNumber(newsletterId) || _.isNaN(newsletterId) ) {
+    return res.status(404).send({msg: 'Required parameter id missing. Got: (' + newsletterId + ').'});
+  }
+
+  DB.Newsletter
+    .forge({id: newsletterId, deleted: 0})
+    .fetch({require: true})
+    .then(function(newsletter) {
+      newsletter.save({
+        deleted: 1
+      }).then(function() {
+        res.send({msg: 'Deleted!', newsletter: newsletter});
+      }, errorHelpers.getDBFailCallback(req, res))
+    }, errorHelpers.getDBFailCallback(req, res));
 
 });
+
+
 
 
 module.exports = router;
