@@ -3,48 +3,22 @@ define([
   'backbone',
   'marionette',
   'underscore',
+
+  './newsletter.itemview',
   'tpl!./templates/newsletters',
-  'tpl!./templates/newsletter'
 ], function(
   App,
   Backbone,
   Marionette,
   _,
-  NewslettersTemplate,
-  NewsletterTemplate
+
+  NewsletterItemView,
+  NewslettersTemplate
 ) {
-  var newsletterView = Marionette.ItemView.extend({
-    template: NewsletterTemplate,
-    tagName: 'tr',
-    ui: {
-      btnEdit: '.actions .edit',
-      btnDelete: '.actions .delete'
-    },
-    events: {
-      'click @ui.btnEdit': 'viewEditNewsletterView',
-      'click @ui.btnDelete': 'deleteNewsletter'
-    },
-
-    templateHelpers: {
-      formatDate: function(timestamp) {
-        var d = new Date(timestamp);
-        return d.toLocaleString('sv');
-      }
-    },
-
-    viewEditNewsletterView: function(e) {
-      var $el = $(e.currentTarget);
-      alert('Not implemented');
-    },
-    deleteNewsletter: function(e) {
-      this.model.destroy();
-    },
-  });
-
 
   var newslettersCompView = Marionette.CompositeView.extend({
     template: NewslettersTemplate,
-    childView: newsletterView,
+    childView: NewsletterItemView,
     childViewContainer: "tbody",
     tagName: 'div',
     className: 'newsletter-list',
@@ -77,7 +51,9 @@ define([
 
     collectionEvents: {
       'change': 'render',
-      'sync': 'reCalc'
+      'sync': 'reCalc',
+      'add': 'reCalc',
+      'remove': 'reCalc'
     },
 
     templateHelpers: {
@@ -101,7 +77,6 @@ define([
       console.log("Change", e);
     },
 
-
     onBlurDateStart: function(e) {
       var date = $(e.currentTarget).val();
       this.ui.inputDateEnd.val(date);
@@ -123,7 +98,8 @@ define([
         end_time: this.ui.inputDateEnd.val(),
         dateline: new Date(),
         comment: this.ui.inputDesc.val(),
-        cached: true
+        cached: true,
+        price: 10
       };
       console.log(data);
 
