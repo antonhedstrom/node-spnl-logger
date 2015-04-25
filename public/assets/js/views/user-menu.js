@@ -1,10 +1,12 @@
 define([
   'app',
   'marionette',
+
   'tpl!./templates/user-menu'
 ], function(
   App,
   Marionette,
+
   UserMenuTemplate
 ) {
 

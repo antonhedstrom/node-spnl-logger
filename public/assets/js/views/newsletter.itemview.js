@@ -2,11 +2,13 @@ define([
   'app',
   'backbone',
   'marionette',
+
   'tpl!./templates/newsletter'
 ], function(
   App,
   Backbone,
   Marionette,
+
   NewsletterTemplate
 ) {
 

@@ -1,8 +1,10 @@
 define([
   'marionette',
 
-  '../models/user.model',
   'tpl!./templates/main',
+
+  // Models
+  '../models/user.model',
 
   // Views
   '../views/userprofile',
@@ -10,8 +12,10 @@ define([
 ], function(
   Marionette,
 
-  UserModel,
   MainTemplate,
+
+  // Models
+  UserModel,
 
   // Views
   UserProfileView,

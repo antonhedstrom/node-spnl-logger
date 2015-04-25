@@ -3,8 +3,9 @@ define([
 
   'tpl!./templates/main',
 
-  '../collections/newsletter.collection',
+  // Models and collections
   '../models/user.model',
+  '../collections/newsletter.collection',
 
   // Views
   '../views/newsletter.compview',
@@ -14,8 +15,9 @@ define([
 
   MainTemplate,
 
-  NewsletterCollection,
+  // Models and collections
   UserModel,
+  NewsletterCollection,
 
   // Views
   NewsletterCompositeView,
