@@ -7,6 +7,14 @@
 </head>
 <body>
 
+  <div class="error-container">
+    <% for ( var i = flashMessages.length; i--; ) { %>
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close fa-times fa"></button>
+        <%= flashMessages[i] %>
+      </div>
+    <% } %>
+  </div>
   <!--
   <div class="panel panel-primary">
     <div class="panel-heading">Authensiering</div>
@@ -46,7 +54,6 @@
         <input type="submit" class="btn btn-block btn-success btn-embossed action-login" value="Login" style="display:none;" />
         <a href="javascript:void(0);" class="btn btn-block btn-success btn-embossed" onclick="document.getElementById('login-form').submit();">Login</a>
 
-        <div class="error-container"></div>
         <!-- <div class="login-action clearfix">
           <div class="col-md-8">
             <label class="checkbox">

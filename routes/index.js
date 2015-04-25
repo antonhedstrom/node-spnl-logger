@@ -11,7 +11,9 @@ router.use('/api', apiRouter);
 
 // Login routes
 router.get(loginRoute, function(req, res) {
-  res.render('login.ejs');
+  res.render('login.ejs', {
+    flashMessages: req.flash('error')
+  });
 });
 
 router.post(loginRoute, passport.authenticate('local-spnl-login', {

@@ -17,7 +17,7 @@ module.exports = function(bookshelf) {
         pbkdf2Settings.keylen,
         function(err, hashRaw) {
           if (err) {
-            return done(null, false, err);
+            return done(null, false, { message: 'Incorrect password' });
           }
 
           var hash = new Buffer(hashRaw, 'binary').toString(pbkdf2Settings.encoding);
@@ -26,7 +26,7 @@ module.exports = function(bookshelf) {
             return done(null, self);
           }
           else {
-            return done(null, false, {type:'ERR_WRONG_PASSWORD', msg: 'Incorrect password'});
+            return done(null, false, { message: 'Incorrect password' });
           }
         }
       );
@@ -95,7 +95,7 @@ module.exports = function(bookshelf) {
           limit: 1
         }).then(function userExists(existingUser) {
           // Username already exists. Throw error. :(
-          done(null, false, {type:'signupErrorMessage', msg:'Username is already taken. Try another.'});
+          done(null, false, { message:'Username is already taken. Try another.' });
         }).catch(function usernameAvailable(err) {
           // Yey! Username available! Create new user.
           self.save(null, {
@@ -121,7 +121,7 @@ module.exports = function(bookshelf) {
         }).then(function(user) {
           return user.checkPassword(password, done);
         }).catch(function(err) {
-          return done(err);
+          return done(null, false, { message: 'Incorrect username.' });
         });
       };
     }
