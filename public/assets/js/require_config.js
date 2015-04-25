@@ -2,16 +2,16 @@ require.config({
   baseUrl: "/assets/js",
   paths: {
     app: 'app_start',
-    backbone: "libs/backbone",
-    'backbone.radio': "libs/backbone.radio.min",
-    underscore: "libs/underscore",
-    jquery: "libs/jquery-2.1.1.min",
-    marionette: "libs/backbone.marionette.min",
-    handlebars: 'libs/handlebars-v1.3.0',
-    bootstrap: 'libs/bootstrap.min',
-    drunkenparrot: 'libs/drunkenparrot.combined.min',
-    text: 'libs/text',
-    tpl: 'libs/tpl'
+    backbone: "libs/backbone/backbone-min",
+    'backbone.radio': "libs/backbone.radio/build/backbone.radio.min",
+    underscore: "libs/underscore/underscore-min",
+    jquery: "libs/jquery/dist/jquery.min",
+    marionette: "libs/backbone.marionette/lib/backbone.marionette.min",
+    handlebars: 'libs/handlebars/dist/handlebars.min',
+    bootstrap: 'libs/bootstrap/dist/js/bootstrap.min',
+    drunkenparrot: 'local_libs/drunkenparrot.combined.min',
+    text: 'libs/requirejs-text/text',
+    tpl: 'local_libs/tpl'
   },
   shim: {
     jquery: {
