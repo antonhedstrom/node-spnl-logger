@@ -6,14 +6,6 @@ $jeet-parent-first: false;
 $jeet-layout-direction: "LTR";
 $jeet-max-width: 960px;
 
-
-
-// * {
-//   border: 1px #459944 solid;
-// }
-// * * {
-//   border: 1px #995566 dashed;
-// }
-// * * * {
-//   border: 1px #5555BB dashed;
-// }
+/* Breakpoints that Drunken Parrot is using */
+$parrot-breakpoint-mobile: 480px;
+$parrot-breakpoint-tablet: 768px;

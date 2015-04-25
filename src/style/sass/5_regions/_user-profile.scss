@@ -1,0 +1,21 @@
+.user-profile {
+  @include cf();
+
+  .user-container {
+    @include col(1/1);
+  }
+
+  .user-fields {
+    @include col(1/2);
+
+  }
+  .user-password {
+    @include col(1/2);
+  }
+
+  .actionbar {
+    clear: both;
+    @include center(300px);
+    margin-top:2em;
+  }
+}

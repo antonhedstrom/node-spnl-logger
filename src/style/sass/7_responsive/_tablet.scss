@@ -1,0 +1,18 @@
+
+@media screen and (max-width: $parrot-breakpoint-tablet) {
+  .user-menu {
+    margin-top: 0;
+    .navbar {
+      border-radius: 0;
+    }
+  }
+
+  .newsletter-list {
+    margin-top: 0;
+  }
+
+  .user-profile {
+    margin: 0 1em;
+  }
+
+}

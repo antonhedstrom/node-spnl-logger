@@ -7,6 +7,9 @@
 Page regions, named after their class or role names
  */
 
-@import "login";
 @import "content";
-@import "footer";
+@import "login";
+@import "user-menu";
+@import "user-profile";
+@import "newsletter-list";
+

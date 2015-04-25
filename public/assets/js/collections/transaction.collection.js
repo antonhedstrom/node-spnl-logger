@@ -8,13 +8,9 @@ define([
   TransactionModel
 ) {
 
-  var exports = {};
-
-  exports.User = Backbone.Collection.extend({
+  return Backbone.Collection.extend({
     urlRoot: '/api/transactions/',
     model: TransactionModel
   });
-
-  return exports;
 
 });

@@ -8,13 +8,13 @@ define([
   NewsletterModel
 ) {
 
-  var exports = {};
+  return Backbone.Collection.extend({
+    url: '/api/newsletters/',
+    model: NewsletterModel,
 
-  exports.User = Backbone.Collection.extend({
-    urlRoot: '/api/newsletters/',
-    model: NewsletterModel
+    // fetch: function(options) {
+    //   return Backbone.Collection.prototype.fetch(options);
+    // }
   });
-
-  return exports;
 
 });

@@ -1,40 +1,45 @@
-var express = require('express'),
-    router = express.Router();
+var express = require('express');
+var apiRouter = require('../api/');
+var passport = require('passport');
 
-var apiRouter = require('../api/'),
-    passport = require('passport');
+router = express.Router();
 
-// Index route
-router.get('/', function(req, res) {
-  res.send('../public/index.html');
+var loginRoute = '/login';
+
+// All API routes
+router.use('/api', apiRouter);
+
+// Login routes
+router.get(loginRoute, function(req, res) {
+  res.render('login.ejs');
 });
 
-router.post('/login', passport.authenticate('local-spnl-login', {
+router.post(loginRoute, passport.authenticate('local-spnl-login', {
+  successRedirect: '/',
+  failureRedirect: loginRoute,
   failureFlash: true
 }), function(req, res) {
-  var targetUrl = '';
-  if ( req.query.url ) {
-    targetUrl = req.query.url;
-  }
-  else {
-    targetUrl = 'dashboard';
-  }
-  res.send({redirect: targetUrl, q: req.query});
+  res.render('index.ejs');
+});
+
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect(loginRoute);
+});
+
+// Index route
+router.get('/', isAuthed, function(req, res) {
+  res.render('index.ejs');
 });
 
 
-router.get('/users/current', function(req, res) {
-  if ( req.user ) {
-    req.user.hash = undefined;
-    req.user.pwd = undefined;
-    res.send(req.user);
+function isAuthed(req, res, next) {
+  console.log(req.params, req.query);
+  if ( req.isAuthenticated() ) {
+    return next();
   }
-  else {
-    res.status(404).send({msg: 'No current user.'});
-  }
-});
+  res.redirect(loginRoute);
+}
 
-
-router.use('/api', apiRouter);
 
 module.exports = router;

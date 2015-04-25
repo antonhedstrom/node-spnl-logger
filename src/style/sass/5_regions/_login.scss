@@ -1,5 +1,7 @@
 .login-container {
-  @include center(300px);
+  @include center(340px);
+
+  margin-top: 2em;
 
   button {
     width:100%;

@@ -3,6 +3,7 @@ require.config({
   paths: {
     app: 'app_start',
     backbone: "libs/backbone",
+    'backbone.radio': "libs/backbone.radio.min",
     underscore: "libs/underscore",
     jquery: "libs/jquery-2.1.1.min",
     marionette: "libs/backbone.marionette.min",
@@ -22,6 +23,10 @@ require.config({
     backbone: {
       deps: ["jquery", "underscore"],
       exports: "Backbone"
+    },
+    'backbone.radio': {
+      deps: ["backbone"],
+      exports: "Backbone.Radio"
     },
     marionette: {
       deps: ["jquery", "underscore", "backbone"],

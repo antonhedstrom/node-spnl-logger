@@ -8,13 +8,10 @@ define([
   UserModel
 ) {
 
-  var exports = {};
-
-  exports.User = Backbone.Collection.extend({
+  return Backbone.Collection.extend({
     urlRoot: '/api/users/',
     model: UserModel
   });
 
-  return exports;
 
 });

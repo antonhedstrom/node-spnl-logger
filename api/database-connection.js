@@ -16,6 +16,7 @@ module.exports = {
       models = setupModels(bookshelf);
     } catch (error) {
       cb(error, undefined);
+      return;
     }
 
     cb(undefined, models);

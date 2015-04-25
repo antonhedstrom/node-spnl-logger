@@ -1,18 +1,14 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
+    utils = require('../../helpers/utils');
     errorHelpers = require('../../helpers/error-handler');
 
 var tsRegexp = /\d{10}/;
 var dateCompareFormatter = function(d) {
-  return d.getFullYear() + pad(d.getMonth()) + pad(d.getDate());
+  return d.getFullYear() + utils.pad(d.getMonth()) + utils.pad(d.getDate());
 };
-function pad(n, width, z) {
-  z = z || '0';
-  width = width || 2;
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
+
 
 /* ROUTES:
 *    /api/newsletters/
@@ -31,9 +27,12 @@ router.get('/', function(req, res) {
   var isPaid = req.query.is_paid || '';
   var limit = parseInt(req.query.limit, 10);
   var payid = parseInt(req.query.payid, 10);
+  var sortField = req.query.sortfield || 'dateline';
+  var sortOrder = req.query.sortorder || 'DESC';
 
   var constraints = {
-    where: {}
+    where: {},
+    orderBy: {}
   };
 
   if ( tsRegexp.test(from) ) {
@@ -65,6 +64,14 @@ router.get('/', function(req, res) {
     constraints.where.paymentid = payid;
   }
 
+  /* Special order? */
+  if ( _.isString(sortField) ) {
+    constraints.orderBy.field = sortField;
+  }
+  if ( sortOrder === 'ASC' || sortOrder === 'DESC' ) {
+    constraints.orderBy.order = sortOrder;
+  }
+
   DB.Newsletter
     .query(function(qb) {
       var where = constraints.where,
@@ -78,12 +85,15 @@ router.get('/', function(req, res) {
       if ( constraints.limit ) {
         qb.limit(constraints.limit);
       }
-      if ( where.paymentid ) {
-        qb.where('paymentid', '=', where.paymentid);
+      if ( constraints.where.paymentid ) {
+        qb.where('paymentid', '=', constraints.where.paymentid);
       }
-      if ( _.isBoolean(where.isPaid) ) {
-        comparator = where.isPaid ? '!=' : '=';
+      if ( _.isBoolean(constraints.where.isPaid) ) {
+        comparator = constraints.where.isPaid ? '!=' : '=';
         qb.where('paymentid', comparator, '0');
+      }
+      if ( constraints.orderBy ) {
+        qb.orderBy(constraints.orderBy.field, constraints.orderBy.order);
       }
      })
     .fetchAll()
@@ -115,6 +125,11 @@ router.get('/:id', function(req, res) {
         res.send(newsletter);
       }
     }, errorHelpers.getDBFailCallback(req, res));
+});
+
+
+router.post('/', function(req, res) {
+
 });
 
 

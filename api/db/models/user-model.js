@@ -6,7 +6,7 @@ module.exports = function(bookshelf) {
 
   return bookshelf.Model.extend({ // Instance properties:
     tableName: 'user',
-    idAttribute: 'name',
+    idAttribute: 'id',
 
     checkPassword: function(password, done) {
       var self = this;
@@ -21,12 +21,12 @@ module.exports = function(bookshelf) {
           }
 
           var hash = new Buffer(hashRaw, 'binary').toString(pbkdf2Settings.encoding);
-
+          console.log(hash);
           if ( hash === self.get('hash') ) {
             return done(null, self);
           }
           else {
-            return done(null, false, {msg: 'Incorrect password'});
+            return done(null, false, {type:'ERR_WRONG_PASSWORD', msg: 'Incorrect password'});
           }
         }
       );
@@ -114,7 +114,7 @@ module.exports = function(bookshelf) {
       var self = this;
       return function(username, password, done) {
         self.forge({
-          name: username
+          username: username
         }).fetch({
           require: true,
           limit: 1

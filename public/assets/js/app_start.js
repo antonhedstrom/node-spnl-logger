@@ -1,7 +1,9 @@
 define([
   'require',
   'marionette',
-  'backbone'
+  'backbone',
+
+  ''
 ], function(
   require,
   Marionette,
@@ -22,20 +24,21 @@ define([
     Backbone.history.navigate(route, options);
   };
 
-  App.on('start', function(options) {
-    require(['./views/main.layout'], function(MainLayout) {
-      var layout = new MainLayout();
-      App.mainRegion.show(layout);
-    });
+  App.addInitializer(function(options) {
+    require([
+      './router',
+    ], function(
+      AppRouter
+    ) {
+      new AppRouter();
 
-    if ( Backbone.history ) {
-      res = Backbone.history.start({
-        pushState: true
+
+
+      Backbone.history.start({
+        pushState: false
       });
-    }
-
+    });
   });
-
 
   return App;
 });

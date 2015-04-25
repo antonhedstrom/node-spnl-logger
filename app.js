@@ -30,8 +30,8 @@ var app = express();
 (function configure() {
   // all environments
   app.set('port', process.env.PORT || settings.app.port || 3000);
-  app.set('views', process.cwd() + '/views');
-  app.set('view engine', 'jade');
+  app.set('views', './views');
+  app.set('view engine', 'ejs');
 
   // Serve up public/ftp folder
   app.use(serveStatic('public', {'index': ['index.html']}));
@@ -39,7 +39,6 @@ var app = express();
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
   app.use(bodyParser.json());
-  app.use(connectFlash());
 
   app.use(session({
     secret: settings.app.session.secret,
@@ -49,12 +48,11 @@ var app = express();
       maxAge: settings.app.session.cookieAge
     }
   }));
-  // parse application/json
-  app.use(multer({ dest: './uploads/'}));
 
   // Passport
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(connectFlash());
 
   // Logger:
   app.use(

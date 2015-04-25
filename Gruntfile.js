@@ -13,9 +13,6 @@ module.exports = function(grunt) {
       dateFormatted: grunt.template.today("yyyy-mm-dd")
     },
     concat: {
-      options: {
-        separator: ';'
-      },
       drunkenjs: {
         src: [
           '<%=dirs.drunkenparrot%>/js/checkbox.js',
