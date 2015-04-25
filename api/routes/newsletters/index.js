@@ -145,7 +145,7 @@ router.delete('/:id', function(req, res) {
     .fetch({require: true})
     .then(function(newsletter) {
       newsletter.save({
-        deleted: 1
+        deleted: true
       }).then(function() {
         res.send({msg: 'Deleted!', newsletter: newsletter});
       }, errorHelpers.getDBFailCallback(req, res))
