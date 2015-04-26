@@ -22,6 +22,7 @@ TODO: Fix DB setup.
 Install dependencies:
 ```
 npm install
+grunt
 ```
 
 Edit settings.js (in root) and start application:

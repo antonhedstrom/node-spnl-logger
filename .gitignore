@@ -36,8 +36,8 @@ public/assets/css
 public/assets/fonts
 
 # Drunken parrot combined script file is built with grunt.
-public/assets/js/libs/drunkenparrot.combined.js
-public/assets/js/libs/drunkenparrot.combined.min.js
+public/assets/js/local_libs/drunkenparrot.combined.js
+public/assets/js/local_libs/drunkenparrot.combined.min.js
 
 # Settings
 # http://blog.pagebakers.nl/2009/01/29/git-ignoring-changes-in-tracked-files/
