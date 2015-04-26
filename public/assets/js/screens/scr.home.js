@@ -8,7 +8,7 @@ define([
   '../collections/newsletter.collection',
 
   // Views
-  '../views/newsletter.compview',
+  '../views/newsletters.compview',
   '../views/user-menu'
 ], function(
   Marionette,

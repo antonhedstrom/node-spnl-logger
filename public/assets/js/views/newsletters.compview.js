@@ -4,6 +4,9 @@ define([
   'marionette',
   'underscore',
 
+  'jquery.datetimepicker',
+  '../utils/utils',
+
   './newsletter.itemview',
   'tpl!./templates/newsletters',
 ], function(
@@ -11,6 +14,9 @@ define([
   Backbone,
   Marionette,
   _,
+
+  DatetimePicker,
+  Utils,
 
   NewsletterItemView,
   NewslettersTemplate
@@ -52,7 +58,7 @@ define([
     collectionEvents: {
       'change': 'render',
       'sync': 'reCalc',
-      'add': 'reCalc',
+      //'add': 'reCalc', // https://github.com/marionettejs/backbone.marionette/issues/640
       'remove': 'reCalc'
     },
 
@@ -64,7 +70,8 @@ define([
 
     reCalc: function() {
       var sum = _.reduce(this.collection.models, function(memo, model) {
-        return memo + model.get('price');
+        var price = model.get('price');
+        return memo + (_.isNumber(price) ? price : 0);
       }, 0);
 
       this.model.set({
@@ -111,16 +118,20 @@ define([
       var dateStart = this.ui.inputDateStart;
       var dateEnd = this.ui.inputDateEnd;
       var latest = this.collection.at(0);
+      var now = new Date();
 
+      // Set default values
       if ( _.isEmpty(number.val()) && latest ) {
-        number.val(latest.get('number') + 1);
+        number.val(parseInt(latest.get('number'), 10) + 1);
       }
-      if ( _.isEmpty(dateStart.val()) ) {
-        dateStart.val(new Date());
-      }
-      if ( _.isEmpty(dateEnd.val()) ) {
-        dateEnd.val(new Date());
-      }
+
+      // Initialize datetimepickers
+      this.$el.find('.date > input').datetimepicker({
+        lang: 'en',
+        format: 'Y-m-d H:i',
+        value: now.getFullYear() + '-' + Utils.pad((now.getMonth()+1)) + '-' +
+          now.getDate() + ' ' + now.getHours() + ':' + '00'
+      });
 
     },
 

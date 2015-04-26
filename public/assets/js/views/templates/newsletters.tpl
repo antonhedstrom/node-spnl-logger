@@ -11,8 +11,8 @@
     <thead>
       <tr class="add-newsletter">
         <th class="number"><input type="number" name="new-number" placeholder="#"/></th>
-        <th class="date date-start"><input type="date" name="new-date-start" /></th>
-        <th class="date date-end"><input type="date" name="new-date-end" /></th>
+        <th class="date date-start"><input type="text" name="new-date-start" /></th>
+        <th class="date date-end"><input type="text" name="new-date-end" /></th>
         <th class="desc">
           <input type="text" name="new-desc" placeholder="Description" />
         </th>
