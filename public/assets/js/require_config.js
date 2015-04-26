@@ -6,7 +6,7 @@ require.config({
     'backbone.radio': "libs/backbone.radio/build/backbone.radio.min",
     underscore: "libs/underscore/underscore-min",
     jquery: "libs/jquery/dist/jquery.min",
-    'jquery.datetimepicker': "libs/jquery-datetimepicker/jquery-datetimepicker",
+    'jquery.datetimepicker': "libs/jquery-datetimepicker/jquery.datetimepicker",
     marionette: "libs/backbone.marionette/lib/backbone.marionette.min",
     handlebars: 'libs/handlebars/dist/handlebars.min',
     bootstrap: 'libs/bootstrap/dist/js/bootstrap.min',
