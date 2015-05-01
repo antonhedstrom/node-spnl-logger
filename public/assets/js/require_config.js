@@ -10,6 +10,7 @@ require.config({
     marionette: "libs/backbone.marionette/lib/backbone.marionette.min",
     handlebars: 'libs/handlebars/dist/handlebars.min',
     bootstrap: 'libs/bootstrap/dist/js/bootstrap.min',
+    alertify: 'libs/alertify/lib/alertify.min',
     drunkenparrot: 'local_libs/drunkenparrot.combined.min',
     text: 'libs/requirejs-text/text',
     tpl: 'local_libs/tpl'

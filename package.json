@@ -37,6 +37,7 @@
     "pm2": "^0.12.5"
   },
   "dependencies": {
+    "alertify": "^0.3.0",
     "array.prototype.find": "^1.0.0",
     "backbone": "^1.1.2",
     "backbone.marionette": "^2.4.1",
