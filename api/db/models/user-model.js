@@ -21,7 +21,6 @@ module.exports = function(bookshelf) {
           }
 
           var hash = new Buffer(hashRaw, 'binary').toString(pbkdf2Settings.encoding);
-          console.log(hash);
           if ( hash === self.get('hash') ) {
             return done(null, self);
           }

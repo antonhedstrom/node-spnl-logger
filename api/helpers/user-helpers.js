@@ -12,7 +12,6 @@ function filterUserData(users) {
   else { // Only one user
     result = _.omit(users, 'hash', 'pwd');
   }
-  console.log("FIltered: ", result);
   return result;
 };
 

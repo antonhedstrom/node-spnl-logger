@@ -16,7 +16,6 @@ router.post('/logout', authHelpers.isAuthed, function(req, res) {
 
 // Test if user is authed or not.
 router.get('/test', function(req, res) {
-  console.log(req.user);
   if ( req.isAuthenticated() ) {
     res.status(200).send({
       msg: 'OK',

@@ -5,10 +5,6 @@ var express = require('express'),
     errorHelpers = require('../../helpers/error-handler');
 
 var tsRegexp = /\d{10}/;
-var dateCompareFormatter = function(d) {
-  return d.getFullYear() + utils.pad(d.getMonth()) + utils.pad(d.getDate());
-};
-
 
 /* ROUTES:
 *    /api/newsletters/
@@ -37,7 +33,6 @@ router.get('/', function(req, res) {
 
   if ( tsRegexp.test(from) ) {
     constraints.where.from = new Date(from.match(tsRegexp)[0] * 1000);
-    console.log(constraints.where.from);
   }
 
   if ( tsRegexp.test(to) ) {
@@ -52,11 +47,9 @@ router.get('/', function(req, res) {
   /* Only filter when explicit set to 'n' or 'y'. */
   if ( isPaid.toLowerCase() === 'y' ) {
     constraints.where.isPaid = true;
-    console.log("isPaid", "TRUUEEE");
   }
   else if ( isPaid.toLowerCase() === 'n' ) {
     constraints.where.isPaid = false;
-    console.log("isPaid", "FAAALSE");
   }
 
   /* isNumber returns true for NaN, therefore both checks needed */
@@ -77,10 +70,10 @@ router.get('/', function(req, res) {
       var where = constraints.where,
           comparator;
       if ( constraints.where.from ) {
-        qb.where('start_time', '>=', dateCompareFormatter(constraints.where.from));
+        qb.where('start_time', '>=', utils.datelineDBFormatter(constraints.where.from));
       }
       if ( constraints.where.to ) {
-        qb.where('end_time', '<=', dateCompareFormatter(constraints.where.to));
+        qb.where('end_time', '<=', utils.datelineDBFormatter(constraints.where.to));
       }
       if ( constraints.limit ) {
         qb.limit(constraints.limit);
@@ -105,6 +98,34 @@ router.get('/', function(req, res) {
     }, errorHelpers.getDBFailCallback(req, res));
 
 });
+
+// Create a new
+router.post('/', function(req, res) {
+  var DB = req.app.get('DB');
+  var data = _.extend(req.body, {
+    paymentid: 0,
+    dateline: utils.datelineDBFormatter(new Date())
+  });
+  new DB.Newsletter(data).save().then(function(model) {
+    res.send(model);
+  }, function(err) {
+    console.log(('' + err).red );
+    var clientErr = {
+      'msg': 'Couldn\'t save newsletter.',
+      data: data,
+      errno: err.errno
+    };
+    switch (err.code) {
+      case 'ER_DUP_ENTRY':
+        clientErr.code = err.code;
+        break;
+      default:
+        clientErr.code = 'SRV_ERR';
+    }
+    res.status(500).send(clientErr);
+  });
+});
+
 
 // Get a specific newsletter
 router.get('/:id', function(req, res) {
