@@ -5,8 +5,10 @@ define([
   'underscore',
 
   'jquery.datetimepicker',
+  'alertify',
   '../utils/utils',
 
+  '../models/newsletter.model',
   './newsletter.itemview',
   'tpl!./templates/newsletters',
 ], function(
@@ -16,8 +18,10 @@ define([
   _,
 
   DatetimePicker,
+  Alertify,
   Utils,
 
+  NewsletterModel,
   NewsletterItemView,
   NewslettersTemplate
 ) {
@@ -56,7 +60,7 @@ define([
     },
 
     collectionEvents: {
-      'change': 'render',
+      'change': 'reCalc',
       'sync': 'reCalc',
       //'add': 'reCalc', // https://github.com/marionettejs/backbone.marionette/issues/640
       'remove': 'reCalc'
@@ -93,30 +97,50 @@ define([
       var code = e.keyCode || e.which;
 
       if ( code === 13 ) { // Enter
-        this.addNewsletter();
+        this.addNewsletter(e);
       }
     },
 
     addNewsletter: function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // TODO: Spara
-      var data = {
-        number: this.ui.inputNumber.val(),
-        start_time: this.ui.inputDateStart.val(),
-        end_time: this.ui.inputDateEnd.val(),
-        comment: this.ui.inputDesc.val(),
-        cached: true
-      };
-      console.log(data);
+      var newsletterModel,
+          newsletterPromise,
+          errs,
+          self = this;
 
-      this.collection.add(data, {at: 0});
+      if ( e ) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      var data = this.getFormValues();
+
+      newsletterModel = new NewsletterModel(data);
+      newsletterPromise = newsletterModel.save();
+
+      if ( !newsletterModel.isValid() || newsletterPromise === false ) {
+        errs = newsletterModel.validationError;
+        if ( errs.focus in this.ui ) {
+          this.ui[errs.focus].focus();
+        }
+        Alertify.error(errs.msg, 'error', 4);
+      }
+      else {
+        this.collection.add(newsletterModel, {at: 0});
+        newsletterPromise.done(function(data, response, options) {
+          data.isLoading = false;
+          newsletterModel.set(data);
+          self.render();
+          Alertify.success('Success!', 'success', 3);
+        }).fail(function(xhr, err, msg) {
+          var errors = xhr.responseJSON;
+          Alertify.alert(errors.msg + '<br/>' + errors.errno + ' (' + errors.code + ')');
+          self.collection.remove(newsletterModel);
+          self.setFormValues(newsletterModel.toJSON());
+        })
+      }
     },
 
     onRender: function() {
       var number = this.ui.inputNumber;
-      var dateStart = this.ui.inputDateStart;
-      var dateEnd = this.ui.inputDateEnd;
       var latest = this.collection.at(0);
       var now = new Date();
 
@@ -130,9 +154,27 @@ define([
         lang: 'en',
         format: 'Y-m-d H:i',
         value: now.getFullYear() + '-' + Utils.pad((now.getMonth()+1)) + '-' +
-          now.getDate() + ' ' + now.getHours() + ':' + '00'
+          Utils.pad(now.getDate()) + ' ' + Utils.pad(now.getHours()) + ':' + Utils.pad(now.getMinutes())
       });
 
+    },
+
+    getFormValues: function() {
+      return {
+        number: parseInt(this.ui.inputNumber.val(), 10),
+        start_time: this.ui.inputDateStart.val() + ':00',
+        end_time: this.ui.inputDateEnd.val() + ':00',
+        comment: this.ui.inputDesc.val(),
+        isLoading: true,
+        price: 10
+      };
+    },
+
+    setFormValues: function(values) {
+      this.ui.inputNumber.val(values.number);
+      this.ui.inputDateStart.val(values.start_time.slice(0,16)); // Remove minutes
+      this.ui.inputDateEnd.val(values.end_time.slice(0,16)); // Remove minutes
+      this.ui.inputDesc.val(values.comment);
     },
 
     destroy: function() {

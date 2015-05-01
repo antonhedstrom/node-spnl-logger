@@ -2,12 +2,14 @@ define([
   'app',
   'backbone',
   'marionette',
+  'alertify',
 
   'tpl!./templates/newsletter'
 ], function(
   App,
   Backbone,
   Marionette,
+  Alertify,
 
   NewsletterTemplate
 ) {
@@ -35,8 +37,21 @@ define([
       var $el = $(e.currentTarget);
       alert('Not implemented');
     },
+
     deleteNewsletter: function(e) {
-      this.model.destroy();
+      var self = this;
+      self.$el.hide();
+      this.model.destroy({
+        wait: true,
+        success: function(model, response, options) {
+
+        },
+        error: function(model, response, options) {
+          // Add the model back to the collection
+          Alertify.error(response.responseText);
+          self.$el.show();
+        }
+      });
     },
   });
 
