@@ -7,9 +7,9 @@ define([
   Backbone
 ) {
 
-  var exports = {};
-
-  return Backbone.Model.extend({
+  var TransactionModel = Backbone.Model.extend({
   });
+
+  return TransactionModel;
 
 });
