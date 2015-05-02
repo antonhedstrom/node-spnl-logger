@@ -5,7 +5,8 @@ define([
   'backbone.radio',
 
   './screens/scr.home',
-  './screens/scr.userprofile'
+  './screens/scr.userprofile',
+  './screens/scr.transactions'
 ], function(
   App,
   Marionette,
@@ -13,7 +14,8 @@ define([
   BackboneRadio,
 
   HomeScreenLayout,
-  ProfileScreenLayout
+  ProfileScreenLayout,
+  TransactionsScreenLayout
 ) {
 
   var appChannel = BackboneRadio.channel('app');
@@ -26,6 +28,12 @@ define([
 
     showHomeScreen: function() {
       var layout = new HomeScreenLayout();
+      App.mainRegion.show(layout);
+      layout.loadData();
+    },
+
+    showPaymentsScreen: function() {
+      var layout = new TransactionsScreenLayout();
       App.mainRegion.show(layout);
       layout.loadData();
     },
@@ -47,6 +55,7 @@ define([
     appRoutes: {
       'home': 'showHomeScreen',
       'profile': 'showProfileScreen',
+      'payments': 'showPaymentsScreen',
       'stats': 'showStatistics',
 
       '*path': 'showHomeScreen'

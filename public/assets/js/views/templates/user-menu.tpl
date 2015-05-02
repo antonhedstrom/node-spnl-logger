@@ -9,6 +9,7 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="#home">Home</a></li>
       <li><a href="#stats">Statistics</a></li>
+      <li><a href="#payments">Payments</a></li>
       <li class="dropdown">
         <a href="#fakeLink" class="dropdown-toggle" data-toggle="dropdown">Whydah <span class="fa-chevron-down fa"></span></a>
         <ul class="dropdown-menu">
