@@ -1,0 +1,66 @@
+table {
+  tr.add-row {
+    input {
+      line-height: 1.6em;
+    }
+  }
+
+  th.add {
+    white-space: nowrap;
+    width: auto;
+    text-align: center;
+    padding: 1em;
+  }
+
+  .hover-only {
+    visibility: hidden;
+  }
+  tr:hover {
+    background-color: $parrot-grey-light;
+    .hover-only {
+      visibility: visible;
+    }
+  }
+
+
+  /* Generic cell styles */
+  .max-width {
+    width:100%;
+    input {
+      width:100%;
+    }
+  }
+  .date {
+    white-space: nowrap;
+    width: auto;
+    input {
+      width: 10em;
+    }
+  }
+  .price {
+    text-align: right;
+    white-space: nowrap;
+    width: auto;
+    input {
+      width: 7em;
+    }
+  }
+
+  /* TBODY */
+  tbody {
+    .navbar-nav.navbar-right:last-child {
+      margin-right: 1em;
+    }
+    .spinner {
+      margin-right: 1em;
+    }
+    .labels {
+      margin-right: 1em;
+    }
+    .actions {
+      .delete a {
+        color: $parrot-red;
+      }
+    }
+  }
+}

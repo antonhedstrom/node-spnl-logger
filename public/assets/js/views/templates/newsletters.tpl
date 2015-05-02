@@ -9,11 +9,11 @@
   <!-- Table -->
   <table class="table">
     <thead>
-      <tr class="add-newsletter">
+      <tr class="add-row">
         <th class="number"><input type="number" name="new-number" placeholder="#"/></th>
         <th class="date date-start"><input type="text" name="new-date-start" /></th>
         <th class="date date-end"><input type="text" name="new-date-end" /></th>
-        <th class="desc">
+        <th class="desc max-width">
           <input type="text" name="new-desc" placeholder="Description" />
         </th>
         <th class="add">
