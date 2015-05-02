@@ -14,6 +14,7 @@ define([
   var NewsletterBaseModel = Backbone.Model.extend({
     defaults: {
       isLoading: false,
+      isRecentlyAdded: false,
       price: 0
     },
 

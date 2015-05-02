@@ -8,6 +8,11 @@
         <span class="fa fa-spinner fa-spin"></span>
       </li>
     <% } %>
+    <% if ( isRecentlyAdded ) { %>
+      <li class="labels">
+        <span class="label label-primary">Added</span>
+      </li>
+    <% } %>
     <li class="dropdown hover-only">
       <span class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></span>
       <ul class="dropdown-menu actions">

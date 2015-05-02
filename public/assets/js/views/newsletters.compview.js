@@ -112,6 +112,9 @@ define([
         e.stopPropagation();
       }
       var data = this.getFormValues();
+      data.isLoading = true;
+      data.isRecentlyAdded = true;
+      data.price = this.collection.first().get('price') || 0;
 
       newsletterModel = new NewsletterModel(data);
       newsletterPromise = newsletterModel.save();
@@ -164,9 +167,7 @@ define([
         number: parseInt(this.ui.inputNumber.val(), 10),
         start_time: this.ui.inputDateStart.val() + ':00',
         end_time: this.ui.inputDateEnd.val() + ':00',
-        comment: this.ui.inputDesc.val(),
-        isLoading: true,
-        price: 10
+        comment: this.ui.inputDesc.val()
       };
     },
 
