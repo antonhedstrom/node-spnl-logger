@@ -3,9 +3,9 @@
   <table class="table">
     <thead>
       <tr class="add-row">
-        <th class="date"><input type="text" name="payment-date" /></th>
-        <th class="amount"><input type="number" name="new-date-end" placeholder="Amount" /></th>
-        <th class="comment max-width"><input type="text" name="new-desc" placeholder="Comment" /></th>
+        <th class="date"><input type="text" name="dateline" /></th>
+        <th class="amount"><input type="number" name="amount" placeholder="Amount" /></th>
+        <th class="comment max-width"><input type="text" name="comment" placeholder="Comment" /></th>
         <th class="add">
           <a class="btn btn-success btn-sm btn-add-new">Add</a>
         </th>
