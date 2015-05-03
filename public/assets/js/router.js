@@ -4,8 +4,8 @@ define([
   'backbone',
   'backbone.radio',
 
-  './screens/scr.home',
   './screens/scr.userprofile',
+  './screens/scr.newsletters',
   './screens/scr.transactions'
 ], function(
   App,
@@ -13,8 +13,8 @@ define([
   Backbone,
   BackboneRadio,
 
-  HomeScreenLayout,
   ProfileScreenLayout,
+  NewslettersScreenLayout,
   TransactionsScreenLayout
 ) {
 
@@ -22,12 +22,11 @@ define([
 
   var MyController = Marionette.Controller.extend({
 
-    initialize: function(options){
-      this.stuff = options.stuff;
+    initialize: function() {
     },
 
-    showHomeScreen: function() {
-      var layout = new HomeScreenLayout();
+    showNewslettersScreen: function() {
+      var layout = new NewslettersScreenLayout();
       App.mainRegion.show(layout);
       layout.loadData();
     },
@@ -53,12 +52,13 @@ define([
   var MyRouter = Backbone.Marionette.AppRouter.extend({
     controller: new MyController(),
     appRoutes: {
-      'home': 'showHomeScreen',
+      'home': 'showNewslettersScreen',
       'profile': 'showProfileScreen',
       'payments': 'showPaymentsScreen',
+      'newsletters': 'showNewslettersScreen',
       'stats': 'showStatistics',
 
-      '*path': 'showHomeScreen'
+      '*path': 'showNewslettersScreen'
     }
   });
 

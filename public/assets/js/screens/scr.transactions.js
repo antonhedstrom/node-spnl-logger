@@ -51,6 +51,11 @@ define([
     loadData: function() {
       this.transactionCollection.fetch();
       this.userModel.fetch();
+    },
+
+    destroy: function() {
+      this.transactionCollection = null;
+      this.userModel = null;
     }
   });
 

@@ -46,6 +46,10 @@ define([
 
     loadData: function() {
       this.userModel.fetch();
+    },
+
+    destroy: function() {
+      this.userModel = null;
     }
   });
 

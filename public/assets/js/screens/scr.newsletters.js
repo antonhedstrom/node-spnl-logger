@@ -55,6 +55,11 @@ define([
         }
       });
       this.userModel.fetch();
+    },
+
+    destroy: function() {
+      this.newsletterCollection = null;
+      this.userModel = null;
     }
   });
 
