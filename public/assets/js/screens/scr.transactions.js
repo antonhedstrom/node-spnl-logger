@@ -1,4 +1,5 @@
 define([
+  'app',
   'marionette',
 
   'tpl!./templates/main',
@@ -11,6 +12,7 @@ define([
   '../views/transactions.compview',
   '../views/user-menu'
 ], function(
+  App,
   Marionette,
 
   MainTemplate,
@@ -33,12 +35,17 @@ define([
 
     initialize: function(options) {
       this.transactionCollection = new TransactionCollection();
-      this.userModel = new UserModel();
+
+      if ( !App.models.user ) {
+        App.models.user = new UserModel();
+      }
+      this.userModel = App.models.user;
     },
 
     onRender: function() {
       var usermenuView = new UserMenuView({
-        model: this.userModel
+        model: this.userModel,
+        activeMenuItem: 'payments'
       });
       var transactionListView = new TransactionCompositeView({
         collection: this.transactionCollection

@@ -1,4 +1,5 @@
 define([
+  'app',
   'marionette',
 
   'tpl!./templates/main',
@@ -10,6 +11,7 @@ define([
   '../views/userprofile',
   '../views/user-menu'
 ], function(
+  App,
   Marionette,
 
   MainTemplate,
@@ -30,12 +32,16 @@ define([
     },
 
     initialize: function(options) {
-      this.userModel = new UserModel();
+      if ( !App.models.user ) {
+        App.models.user = new UserModel();
+      }
+      this.userModel = App.models.user;
     },
 
     onRender: function() {
       var usermenuView = new UserMenuView({
-        model: this.userModel
+        model: this.userModel,
+        activeMenuItem: 'profile'
       });
       var userProfileView = new UserProfileView({
         model: this.userModel
