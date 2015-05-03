@@ -5,6 +5,20 @@ table {
     }
   }
 
+  thead,
+  tbody {
+    tr > *:first-child {
+      padding-left:1em;
+    }
+    tr > *:last-child {
+      padding-right:1em;
+    }
+  }
+
+  tr.headers > * {
+    background-color: $parrot-grey-light;
+  }
+
   th.add {
     white-space: nowrap;
     width: auto;
@@ -14,12 +28,6 @@ table {
 
   .hover-only {
     visibility: hidden;
-  }
-  tr:hover {
-    background-color: $parrot-grey-light;
-    .hover-only {
-      visibility: visible;
-    }
   }
 
 
@@ -48,6 +56,12 @@ table {
 
   /* TBODY */
   tbody {
+    tr:hover {
+      background-color: $parrot-grey-light;
+      .hover-only {
+        visibility: visible;
+      }
+    }
     .navbar-nav.navbar-right:last-child {
       margin-right: 1em;
     }
