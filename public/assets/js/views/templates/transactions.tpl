@@ -12,7 +12,7 @@
       </tr>
       <tr class="headers">
         <th class="date">Date</th>
-        <th class="amount price">Amount</th>
+        <th class="amount">Amount</th>
         <th class="comment">Comment</th>
         <th class="actions">&nbsp;</th>
       </tr>
