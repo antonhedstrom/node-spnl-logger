@@ -1,9 +1,9 @@
 
-<h1>USER PROFILE</h1>
+<h1>User profile</h1>
 
 <div class="user-container">
   <div class="user-fields">
-    <h2>Change</h2>
+    <h2>&nbsp;</h2>
     <div class="form-group">
       <input type="text" value="<%=username%>" class="form-control" disabled placeholder="First name" />
     </div>
