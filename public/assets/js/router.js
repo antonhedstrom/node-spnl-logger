@@ -22,9 +22,6 @@ define([
 
   var MyController = Marionette.Controller.extend({
 
-    initialize: function() {
-    },
-
     showNewslettersScreen: function() {
       var layout = new NewslettersScreenLayout();
       App.mainRegion.show(layout);
@@ -50,6 +47,8 @@ define([
   });
 
   var MyRouter = Backbone.Marionette.AppRouter.extend({
+    initialize: function() {
+    },
     controller: new MyController(),
     appRoutes: {
       'home': 'showNewslettersScreen',
@@ -59,6 +58,9 @@ define([
       'stats': 'showStatistics',
 
       '*path': 'showNewslettersScreen'
+    },
+
+    destroy: function() {
     }
   });
 
