@@ -1,7 +1,5 @@
 var _ = require('underscore');
 
-var exports = {};
-
 function filterUserData(users) {
   var result;
   if ( _.isArray(users) ) {
@@ -13,9 +11,7 @@ function filterUserData(users) {
     result = _.omit(users, 'hash', 'pwd');
   }
   return result;
-};
-
-
+}
 
 module.exports = {
   filterUserData: filterUserData
