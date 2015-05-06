@@ -1,16 +1,16 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
-    errorHelpers = require('../../helpers/error-handler');
+    errorHelpers = require('../../helpers/error-handler'),
+    Transaction = require('../../../db/models/transaction-model');
 
 
 // Get all
 router.get('/', function(req, res) {
-  var DB = req.app.get('DB');
   var limit = parseInt(req.query.limit, 10);
   var sortOrder = req.query.sort_order || 'DESC';
 
-  DB.Transaction
+  Transaction
     .query(function(qb) {
       if ( !_.isNaN(limit) ) {
         qb.limit(limit);
@@ -26,7 +26,6 @@ router.get('/', function(req, res) {
 
 // Get one
 router.get('/:id', function(req, res) {
-  var DB = req.app.get('DB');
   var transactionId = parseInt(req.params.id, 10);
 
   // isNumber returns true for NaN so both checks needed.
@@ -34,7 +33,7 @@ router.get('/:id', function(req, res) {
     return res.status(404).send({msg: 'Can\'t find id: ' + transactionId});
   }
 
-  DB.Transaction
+  Transaction
     .forge({id: transactionId})
     .fetch({require: true, withRelated: 'newsletters'})
     .then(function success(transaction) {
@@ -44,10 +43,10 @@ router.get('/:id', function(req, res) {
 
 // Create a new
 router.post('/', function(req, res) {
-  var DB = req.app.get('DB');
   var data = req.body;
 
-  new DB.Transaction(data).save().then(function(model) {
+  var transaction = new Transaction(data);
+  transaction.save().then(function(model) {
     res.send(model);
   }, function(err) {
     console.log(('' + err).red );

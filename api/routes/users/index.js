@@ -1,12 +1,12 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
-    userHelpers = require('../../helpers/user-helpers');
+    userHelpers = require('../../helpers/user-helpers'),
+    User = require('../../../db/models/user-model');
 
 
 router.get('/', function(req, res) {
-  var DB = req.app.get('DB');
-  DB.User.fetchAll().then(function(users) {
+  User.fetchAll().then(function(users) {
     res.send(userHelpers.filterUserData(users));
   });
 });
@@ -22,7 +22,6 @@ router.get('/me', function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-  var DB = req.app.get('DB');
   var userId = req.params.id;
   var regDigits = /^\d+$/;
   var userFilter = {};
@@ -33,7 +32,7 @@ router.get('/:id', function(req, res) {
     userFilter = {username: userId};
   }
 
-  DB.User.forge(userFilter).fetch({
+  User.forge(userFilter).fetch({
     require: true,
     limit: 1
   }).then(function (user) {

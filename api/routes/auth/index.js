@@ -1,10 +1,8 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
-    passport = require('passport'),
     userHelpers = require('../../helpers/user-helpers'),
     authHelpers = require('../../helpers/auth-helpers');
-
 
 router.post('/logout', authHelpers.isAuthed, function(req, res) {
   req.logout();

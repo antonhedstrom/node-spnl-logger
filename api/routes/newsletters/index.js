@@ -1,21 +1,15 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
-    utils = require('../../helpers/utils');
-    errorHelpers = require('../../helpers/error-handler');
+    utils = require('../../helpers/utils'),
+    errorHelpers = require('../../helpers/error-handler'),
+    Newsletter = require('../../../db/models/newsletter-model');
 
 var tsRegexp = /\d{10}/;
 
-/* ROUTES:
-*    /api/newsletters/
-*    /api/newsletters/?is_paid=true
-*    /api/newsletters/?is_paid=false
-*    /api/newsletters/123
-*/
 
-// Get all newsletters (with filtering)
+// Get all newsletter (with filtering)
 router.get('/', function(req, res) {
-  var DB = req.app.get('DB');
 
   // Filter options
   var from = req.query.from;
@@ -65,7 +59,7 @@ router.get('/', function(req, res) {
     constraints.orderBy.order = sortOrder;
   }
 
-  DB.Newsletter
+  Newsletter
     .query(function(qb) {
       var where = constraints.where,
           comparator;
@@ -101,12 +95,13 @@ router.get('/', function(req, res) {
 
 // Create a new
 router.post('/', function(req, res) {
-  var DB = req.app.get('DB');
   var data = _.extend(req.body, {
     paymentid: 0,
     dateline: utils.datelineDBFormatter(new Date())
   });
-  new DB.Newsletter(data).save().then(function(model) {
+
+  var newsletter = new Newsletter(data);
+  newsletter.save().then(function(model) {
     res.send(model);
   }, function(err) {
     console.log(('' + err).red );
@@ -129,7 +124,6 @@ router.post('/', function(req, res) {
 
 // Get a specific newsletter
 router.get('/:id', function(req, res) {
-  var DB = req.app.get('DB');
   var newsletterId = parseInt(req.params.id, 10);
 
   // isNumber returns true for NaN so both checks needed.
@@ -137,7 +131,7 @@ router.get('/:id', function(req, res) {
     return res.status(404).send({msg: 'Required parameter id missing. Got: (' + newsletterId + ').'});
   }
 
-  DB.Newsletter
+  Newsletter
     .forge({id: newsletterId, deleted: 0})
     .fetch({require: true})
     .then(function(newsletter) {
@@ -153,7 +147,6 @@ router.get('/:id', function(req, res) {
 
 // 'Delete' existing. Actually updates the 'deleted' attribute.
 router.delete('/:id', function(req, res) {
-  var DB = req.app.get('DB');
   var newsletterId = parseInt(req.params.id, 10);
 
   // isNumber returns true for NaN so both checks needed.
@@ -161,7 +154,7 @@ router.delete('/:id', function(req, res) {
     return res.status(404).send({msg: 'Required parameter id missing. Got: (' + newsletterId + ').'});
   }
 
-  DB.Newsletter
+  Newsletter
     .forge({id: newsletterId, deleted: 0})
     .fetch({require: true})
     .then(function(newsletter) {
@@ -169,12 +162,9 @@ router.delete('/:id', function(req, res) {
         deleted: true
       }).then(function() {
         res.send({msg: 'Deleted!', newsletter: newsletter});
-      }, errorHelpers.getDBFailCallback(req, res))
+      }, errorHelpers.getDBFailCallback(req, res));
     }, errorHelpers.getDBFailCallback(req, res));
 
 });
-
-
-
 
 module.exports = router;
