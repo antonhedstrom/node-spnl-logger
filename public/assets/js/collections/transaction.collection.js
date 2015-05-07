@@ -1,16 +1,20 @@
 define([
   'app',
   'backbone',
+
   '../models/transaction.model'
 ], function(
   App,
   Backbone,
+
   TransactionModel
 ) {
 
-  return Backbone.Collection.extend({
-    urlRoot: '/api/transactions/',
+  var TransactionCollection = Backbone.Collection.extend({
+    url: '/api/transactions/',
     model: TransactionModel
   });
+
+  return TransactionCollection;
 
 });

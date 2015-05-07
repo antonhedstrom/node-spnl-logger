@@ -2,12 +2,12 @@ define([
   'require',
   'marionette',
   'backbone',
-
-  ''
+  'underscore'
 ], function(
   require,
   Marionette,
-  Backbone
+  Backbone,
+  _
 ) {
 
   var App = new Backbone.Marionette.Application();
@@ -16,11 +16,13 @@ define([
     mainRegion: 'body'
   });
 
-  App.navigate = function (route, options) {
+  App.navigate = function(route, options) {
     if ( route[0] !== '#' ) {
       route = '#' + route;
     }
-    options = options || {};
+    options = _.defaults(options || {}, {
+      trigger: true
+    });
     Backbone.history.navigate(route, options);
   };
 
@@ -32,13 +34,14 @@ define([
     ) {
       new AppRouter();
 
-
-
       Backbone.history.start({
         pushState: false
       });
     });
   });
+
+  App.models = {};
+  App.collections = {};
 
   return App;
 });

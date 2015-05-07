@@ -3,9 +3,14 @@
 <td class="date date_end"><%=formatDate(end_time)%></td>
 <td class="desc" colspan="2">
   <ul class="nav navbar-nav navbar-right navbar-icons">
-    <% if ( cached ) { %>
+    <% if ( isLoading ) { %>
       <li class="spinner">
         <span class="fa fa-spinner fa-spin"></span>
+      </li>
+    <% } %>
+    <% if ( isRecentlyAdded ) { %>
+      <li class="labels">
+        <span class="label label-primary">Added</span>
       </li>
     <% } %>
     <li class="dropdown hover-only">

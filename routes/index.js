@@ -20,9 +20,7 @@ router.post(loginRoute, passport.authenticate('local-spnl-login', {
   successRedirect: '/',
   failureRedirect: loginRoute,
   failureFlash: true
-}), function(req, res) {
-  res.render('index.ejs');
-});
+}));
 
 router.get('/logout', function(req, res) {
   req.logout();

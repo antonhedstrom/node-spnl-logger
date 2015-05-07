@@ -1,10 +1,8 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
-    passport = require('passport'),
     userHelpers = require('../../helpers/user-helpers'),
     authHelpers = require('../../helpers/auth-helpers');
-
 
 router.post('/logout', authHelpers.isAuthed, function(req, res) {
   req.logout();
@@ -16,7 +14,6 @@ router.post('/logout', authHelpers.isAuthed, function(req, res) {
 
 // Test if user is authed or not.
 router.get('/test', function(req, res) {
-  console.log(req.user);
   if ( req.isAuthenticated() ) {
     res.status(200).send({
       msg: 'OK',

@@ -1,10 +1,12 @@
 define([
   'app',
   'marionette',
+
   'tpl!./templates/userprofile'
 ], function(
   App,
   Marionette,
+
   UserProfileTemplate
 ) {
   var exports = {};

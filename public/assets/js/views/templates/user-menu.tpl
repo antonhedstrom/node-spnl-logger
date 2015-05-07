@@ -6,21 +6,15 @@
   </div>
 
   <div class="collapse navbar-collapse" id="navbar-collapse-2">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#home">Home</a></li>
-      <li><a href="#stats">Statistics</a></li>
-      <li class="dropdown">
-        <a href="#fakeLink" class="dropdown-toggle" data-toggle="dropdown">Whydah <span class="fa-chevron-down fa"></span></a>
-        <ul class="dropdown-menu">
-          <div class="arrow top"></div>
-          <li><a href="#fakeLink">Action</a></li>
-          <li class="active"><a href="#fakeLink">Another action</a></li>
-          <li><a href="#fakeLink">Something else here</a></li>
-        </ul>
-      </li>
+    <ul class="nav navbar-nav nav-main">
+      <% _.each(menuItems, function(item) { %>
+        <li class="<%= getActiveMenuItem() === item.url ? 'active' : '' %>">
+          <a href="#<%=item.url%>"><%=item.title%></a>
+        </li>
+      <% }) %>
     </ul>
 
-    <ul class="nav navbar-nav navbar-right navbar-icons">
+    <ul class="nav navbar-nav navbar-right navbar-icons nav-user">
       <li class="dropdown">
         <a href="#fakeLink" class="dropdown-toggle" data-toggle="dropdown">
           <span class="user-name-full"><%= getFullName() %></span>

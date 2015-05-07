@@ -1,63 +1,11 @@
 .newsletter-list {
 
-  tr.add-newsletter {
-    input {
-      line-height: 1.6em;
-    }
-  }
-
-  tbody {
-    .navbar-nav.navbar-right:last-child {
-      margin-right: 1em;
-    }
-
-    .spinner {
-      margin-right: 1em;
-    }
-
-    .hover-only {
-      visibility: hidden;
-    }
-    tr:hover {
-      background-color: $parrot-grey-light;
-      .hover-only {
-        visibility: visible;
-      }
-    }
-
-    .actions {
-      .delete a {
-        color: $parrot-red;
-      }
-    }
-  }
-
   .number {
     white-space: nowrap;
     width: auto;
-    text-align: center;
     input {
       width: 4em;
     }
-  }
-  .date {
-    white-space: nowrap;
-    width: auto;
-    input {
-      width: 10em;
-    }
-  }
-  .desc {
-    width:100%;
-    input {
-      width:100%;
-    }
-  }
-  th.add {
-    white-space: nowrap;
-    width: auto;
-    text-align: center;
-    padding: 1em;
   }
 
   .panel-heading,

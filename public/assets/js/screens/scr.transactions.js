@@ -4,11 +4,12 @@ define([
 
   'tpl!./templates/main',
 
-  // Models
+  // Models and collections
   '../models/user.model',
+  '../collections/transaction.collection',
 
   // Views
-  '../views/userprofile',
+  '../views/transactions.compview',
   '../views/user-menu'
 ], function(
   App,
@@ -16,11 +17,12 @@ define([
 
   MainTemplate,
 
-  // Models
+  // Models and collections
   UserModel,
+  TransactionCollection,
 
   // Views
-  UserProfileView,
+  TransactionCompositeView,
   UserMenuView
 ) {
   var Layout = Backbone.Marionette.LayoutView.extend({
@@ -32,6 +34,8 @@ define([
     },
 
     initialize: function(options) {
+      this.transactionCollection = new TransactionCollection();
+
       if ( !App.models.user ) {
         App.models.user = new UserModel();
       }
@@ -41,20 +45,23 @@ define([
     onRender: function() {
       var usermenuView = new UserMenuView({
         model: this.userModel,
-        activeMenuItem: 'profile'
+        activeMenuItem: 'payments'
       });
-      var userProfileView = new UserProfileView({
-        model: this.userModel
+      var transactionListView = new TransactionCompositeView({
+        collection: this.transactionCollection
       });
+
       this.header.show(usermenuView);
-      this.content.show(userProfileView);
+      this.content.show(transactionListView);
     },
 
     loadData: function() {
+      this.transactionCollection.fetch();
       this.userModel.fetch();
     },
 
     destroy: function() {
+      this.transactionCollection = null;
       this.userModel = null;
     }
   });

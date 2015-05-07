@@ -1,7 +1,5 @@
 var _ = require('underscore');
 
-var exports = {};
-
 function filterUserData(users) {
   var result;
   if ( _.isArray(users) ) {
@@ -12,11 +10,8 @@ function filterUserData(users) {
   else { // Only one user
     result = _.omit(users, 'hash', 'pwd');
   }
-  console.log("FIltered: ", result);
   return result;
-};
-
-
+}
 
 module.exports = {
   filterUserData: filterUserData

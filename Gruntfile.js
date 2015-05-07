@@ -7,6 +7,7 @@ module.exports = function(grunt) {
       src: __dirname + '/src',
       dest: __dirname + '/public/assets',
       drunkenparrot: __dirname + '/src/style/vendor/drunken-parrot',
+      node_modules: __dirname + '/node_modules/'
     },
     vars: {
       name: '<%=pkg.name.toLowerCase()%>',
@@ -20,15 +21,18 @@ module.exports = function(grunt) {
           '<%=dirs.drunkenparrot%>/js/bootstrap-switch.js',
           '<%=dirs.drunkenparrot%>/js/toolbar.js',
         ],
-        dest: '<%=dirs.dest%>/js/libs/drunkenparrot.combined.js'
+        dest: '<%=dirs.dest%>/js/local_libs/drunkenparrot.combined.js'
       },
-      css: {
+      css_external_libs: {
         src: [
-          '<%=dirs.drunkenparrot%>/bootstrap/css/bootstrap.css',
+          '<%=dirs.node_modules%>/bootstrap/dist/css/bootstrap.min.css',
           '<%=dirs.drunkenparrot%>/css/font-awesome.min.css',
           '<%=dirs.drunkenparrot%>/css/drunken-parrot.css',
+          '<%=dirs.node_modules%>/jquery-datetimepicker/jquery.datetimepicker.css',
+          '<%=dirs.node_modules%>/alertify/themes/alertify.core.css',
+          '<%=dirs.node_modules%>/alertify/themes/alertify.default.css'
         ],
-        dest: '<%=dirs.dest%>/css/drunkenparrot.combined.css'
+        dest: '<%=dirs.dest%>/css/libs.css'
       },
     },
     uglify: {
@@ -37,7 +41,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['<%= concat.drunkenjs.dest %>'],
-        dest: '<%=dirs.dest%>/js/libs/drunkenparrot.combined.min.js'
+        dest: '<%=dirs.dest%>/js/local_libs/drunkenparrot.combined.min.js'
       }
     },
     qunit: {
@@ -63,7 +67,7 @@ module.exports = function(grunt) {
       },
       dev: {
         src: '<%=dirs.src%>/style/sass/main.scss',
-        dest: '<%=dirs.dest%>/css/main.css'
+        dest: '<%=dirs.dest%>/css/app.css'
       }
     },
     copy: {
@@ -77,7 +81,7 @@ module.exports = function(grunt) {
           },
           {
             expand: true,
-            cwd: '<%=dirs.drunkenparrot%>/bootstrap/fonts/',
+            cwd: '<%=dirs.node_modules%>/bootstrap/dist/fonts/',
             src: ['**'],
             dest: '<%=dirs.dest%>/fonts/'
           }
@@ -100,8 +104,8 @@ module.exports = function(grunt) {
         '<%=dirs.dest%>/css'
       ],
       js: [
-        '<%=dirs.dest%>/js/libs/drunkenparrot.combined.js',
-        '<%=dirs.dest%>/js/libs/drunkenparrot.combined.min.js'
+        '<%=dirs.dest%>/js/local_libs/drunkenparrot.combined.js',
+        '<%=dirs.dest%>/js/local_libs/drunkenparrot.combined.min.js'
       ],
       fonts: [
         '<%=dirs.dest%>/fonts'
