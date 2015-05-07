@@ -20,7 +20,6 @@ var express = require('express'),
 
     // Local files:
     settings = require('./settings'),
-    //db = require('./db/database-connection'),
     Bookshelf = require('bookshelf'),
     bookshelf = require('./db/bookshelf')(Bookshelf),
     localPassportStrategies = require('./db/passport-strategies'),
@@ -68,22 +67,12 @@ app.use(
 // Server side routes
 app.use(routes);
 
-// Connect to database
-// db.connect(function(err, bookshelf) {
-//   if (err) {
-//     console.log('Couldn\'t connect to database:'.red, err);
-//   }
-//   else {
-//     console.log('Connected to database. Maybe.'.green);
-    app.set('bookshelf', bookshelf.myInstance);
+app.set('bookshelf', bookshelf.myInstance);
+localPassportStrategies();
 
-    localPassportStrategies();
-
-    // Start app!
-    http.createServer(app).listen(app.get('port'), function(){
-      console.log(('Express server listening on port ' + app.get('port')).green);
-    });
-//   }
-// });
+// Start app!
+http.createServer(app).listen(app.get('port'), function(){
+  console.log(('Express server listening on port ' + app.get('port')).green);
+});
 
 module.exports = app;
