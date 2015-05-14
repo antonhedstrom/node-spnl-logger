@@ -23,19 +23,13 @@ define([
 
     initialize: function(options) {
       this.model.set('menuItems', [
-        { title: 'Home', url: 'home' },
-        { title: 'Statistics', url: 'stats' },
-        { title: 'Payments', url: 'payments' }
+        { title: 'Home', url: '#home' },
+        { title: 'Statistics', url: '#stats' },
+        { title: 'Payments', url: '#payments' }
       ]);
-      this.activeMenuItem = options.activeMenuItem;
-    },
 
-    ui: {
-      navMainItems: '.nav-main > li > a'
-    },
-
-    events: {
-      'click @ui.navMainItems': 'mainNavItemClicked'
+      var activeUrl = '#' + Backbone.history.getFragment().split('/')[0];
+      this.model.set('activeMenuItem', activeUrl);
     },
 
     modelEvents: {
