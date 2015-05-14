@@ -36,10 +36,27 @@ define([
       change: 'render'
     },
 
-    templateHelpers: {
-      getFullName: function() {
-        return this.firstname + ' ' + this.lastname;
-      }
+    templateHelpers: function() {
+      var self = this;
+      return {
+        getFullName: function() {
+          return this.firstname + ' ' + this.lastname;
+        },
+        getActiveMenuItem: function() {
+          return self.activeMenuItem;
+        }
+      };
+    },
+
+    mainNavItemClicked: function(e) {
+      var $link = $(e.currentTarget),
+          newTarget = $link.attr('href').slice(1);
+      e.preventDefault();
+      e.stopPropagation();
+
+      App.navigate(newTarget);
+      this.activeMenuItem = newTarget;
+      this.render();
     }
 
   });

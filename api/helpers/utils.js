@@ -18,7 +18,6 @@ function datelineDBFormatter(d) {
 }
 
 
-
 module.exports = {
   pad: pad,
   datelineDBFormatter: datelineDBFormatter

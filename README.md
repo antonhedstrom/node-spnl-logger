@@ -23,6 +23,7 @@ SALT=<my-password-salt>
 ```
 Preferably you can set thoose in the .env file in project root.
 
+
 ### Database
 TODO: Fix DB setup.
 
