@@ -44,8 +44,7 @@ define([
 
     onRender: function() {
       var usermenuView = new UserMenuView({
-        model: this.userModel,
-        activeMenuItem: 'payments'
+        model: this.userModel
       });
       var transactionListView = new TransactionCompositeView({
         collection: this.transactionCollection

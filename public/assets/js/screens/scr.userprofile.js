@@ -40,8 +40,7 @@ define([
 
     onRender: function() {
       var usermenuView = new UserMenuView({
-        model: this.userModel,
-        activeMenuItem: 'profile'
+        model: this.userModel
       });
       var userProfileView = new UserProfileView({
         model: this.userModel

@@ -2,14 +2,14 @@
 
   <div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2"><span class="fa fa-bars"></span></button>
-    <img class="logo" src="/assets/img/spnl_logo.png" />
+    <a href="#home"><img class="logo" src="/assets/img/spnl_logo.png" /></a>
   </div>
 
   <div class="collapse navbar-collapse" id="navbar-collapse-2">
     <ul class="nav navbar-nav nav-main">
       <% _.each(menuItems, function(item) { %>
-        <li class="<%= getActiveMenuItem() === item.url ? 'active' : '' %>">
-          <a href="#<%=item.url%>"><%=item.title%></a>
+        <li class="<%= activeMenuItem === item.url ? 'active' : '' %>">
+          <a href="<%=item.url%>"><%=item.title%></a>
         </li>
       <% }) %>
     </ul>

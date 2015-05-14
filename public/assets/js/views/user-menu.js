@@ -23,46 +23,23 @@ define([
 
     initialize: function(options) {
       this.model.set('menuItems', [
-        { title: 'Home', url: 'home' },
-        { title: 'Statistics', url: 'stats' },
-        { title: 'Payments', url: 'payments' }
+        { title: 'Home', url: '#home' },
+        { title: 'Statistics', url: '#stats' },
+        { title: 'Payments', url: '#payments' }
       ]);
-      this.activeMenuItem = options.activeMenuItem;
-    },
 
-    ui: {
-      navMainItems: '.nav-main > li > a'
-    },
-
-    events: {
-      'click @ui.navMainItems': 'mainNavItemClicked'
+      var activeUrl = '#' + Backbone.history.getFragment().split('/')[0];
+      this.model.set('activeMenuItem', activeUrl);
     },
 
     modelEvents: {
       change: 'render'
     },
 
-    templateHelpers: function() {
-      var self = this;
-      return {
-        getFullName: function() {
-          return this.firstname + ' ' + this.lastname;
-        },
-        getActiveMenuItem: function() {
-          return self.activeMenuItem;
-        }
-      };
-    },
-
-    mainNavItemClicked: function(e) {
-      var $link = $(e.currentTarget),
-          newTarget = $link.attr('href').slice(1);
-      e.preventDefault();
-      e.stopPropagation();
-
-      App.navigate(newTarget);
-      this.activeMenuItem = newTarget;
-      this.render();
+    templateHelpers: {
+      getFullName: function() {
+        return this.firstname + ' ' + this.lastname;
+      }
     }
 
   });

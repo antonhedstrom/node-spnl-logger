@@ -51,8 +51,7 @@ define([
 
     onRender: function() {
       var usermenuView = new UserMenuView({
-        model: this.userModel,
-        activeMenuItem: 'home'
+        model: this.userModel
       });
       var newsletterListView = new NewsletterCompositeView({
         collection: this.newsletterCollection
