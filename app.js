@@ -2,6 +2,9 @@
  * Module dependencies.
  */
 
+// https://github.com/motdotla/dotenv
+require('dotenv').load();
+
 var express = require('express'),
     http = require('http'),
     path = require('path'),
@@ -19,7 +22,7 @@ var express = require('express'),
     session = require('express-session'),
 
     // Local files:
-    settings = require('./settings'),
+    SETTINGS = require('./settings'),
     Bookshelf = require('bookshelf'),
     bookshelf = require('./db/bookshelf')(Bookshelf),
     localPassportStrategies = require('./db/passport-strategies'),
@@ -30,7 +33,7 @@ var express = require('express'),
 var app = module.exports = express();
 
 // all environments
-app.set('port', process.env.PORT || settings.app.port || 3000);
+app.set('port', SETTINGS.app.port || 3000);
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
@@ -42,11 +45,11 @@ app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-
 app.use(bodyParser.json());
 
 app.use(session({
-  secret: settings.app.session.secret,
+  secret: SETTINGS.app.session.secret,
   saveUninitialized: true,
   resave: true,
   cookie: {
-    maxAge: settings.app.session.cookieAge
+    maxAge: SETTINGS.app.session.cookieAge
   }
 }));
 
@@ -72,7 +75,7 @@ localPassportStrategies();
 
 // Start app!
 http.createServer(app).listen(app.get('port'), function(){
-  console.log(('Express server listening on port ' + app.get('port')).green);
+  console.log(('Express server (env='+process.env.ENV+') listening on port ' + app.get('port')).green);
 });
 
 module.exports = app;
