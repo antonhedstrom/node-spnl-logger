@@ -22,10 +22,10 @@ define([
 
   var MyController = Marionette.Controller.extend({
 
-    showNewslettersScreen: function() {
+    showNewslettersScreen: function(path) {
       var layout = new NewslettersScreenLayout();
       App.mainRegion.show(layout);
-      layout.loadData();
+      layout.loadData(path);
     },
 
     showPaymentsScreen: function() {
@@ -42,6 +42,10 @@ define([
 
     showStatistics: function() {
 
+    },
+
+    defaultRoute: function() {
+      App.navigate('home');
     }
 
   });
@@ -51,13 +55,13 @@ define([
     },
     controller: new MyController(),
     appRoutes: {
-      'home': 'showNewslettersScreen',
+      'home(/*path)': 'showNewslettersScreen',
       'profile': 'showProfileScreen',
       'payments': 'showPaymentsScreen',
-      'newsletters': 'showNewslettersScreen',
+      'newsletters(/*path)': 'showNewslettersScreen',
       'stats': 'showStatistics',
 
-      '*path': 'showNewslettersScreen'
+      '*path': 'defaultRoute'
     },
 
     destroy: function() {
