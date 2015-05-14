@@ -42,3 +42,4 @@ public/assets/js/local_libs/drunkenparrot.combined.min.js
 # Settings
 # http://blog.pagebakers.nl/2009/01/29/git-ignoring-changes-in-tracked-files/
 
+.env

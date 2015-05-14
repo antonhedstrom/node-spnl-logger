@@ -1,6 +1,6 @@
 var passport = require('passport'),
     PassportLocalStrategy = require('passport-local').Strategy,
-    pbkdf2Settings = require('../settings').db.connection.pbkdf2;
+    pbkdf2Settings = require('../settings').pbkdf2;
 
   var User = require('./models/user-model');
 

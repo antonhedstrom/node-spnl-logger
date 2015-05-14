@@ -1,5 +1,5 @@
 var crypto = require('crypto'),
-    pbkdf2Settings = require('../../settings').db.connection.pbkdf2,
+    pbkdf2Settings = require('../../settings').pbkdf2,
     bookshelf = require('bookshelf').myInstance;
 
 module.exports = bookshelf.Model.extend({
