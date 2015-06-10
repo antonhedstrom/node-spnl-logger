@@ -14,7 +14,8 @@ define([
     urlRoot: '/api/transactions/',
     defaults: {
       isLoading: false,
-      isRecentlyAdded: false
+      isRecentlyAdded: false,
+      deletedFail: false
     },
 
     // Override default save to control what is being sent to server.

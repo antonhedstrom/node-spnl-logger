@@ -72,6 +72,7 @@ table {
       margin-right: 1em;
     }
     .actions {
+      white-space: nowrap;
       .delete a {
         color: $parrot-red;
       }

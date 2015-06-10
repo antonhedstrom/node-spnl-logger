@@ -11,7 +11,7 @@ module.exports = {
         default:
           statusCode = 500;
       }
-      res.status(404).send(err);
+      res.status(statusCode).send(err);
     };
   }
 

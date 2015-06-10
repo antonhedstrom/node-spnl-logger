@@ -61,7 +61,7 @@ define([
       'newsletters(/*path)': 'showNewslettersScreen',
       'stats': 'showStatistics',
 
-      '*path': 'defaultRoute'
+      '': 'defaultRoute'
     },
 
     destroy: function() {

@@ -13,8 +13,7 @@
       <tr class="headers">
         <th class="date">Date</th>
         <th class="amount">Amount</th>
-        <th class="comment">Comment</th>
-        <th class="actions">&nbsp;</th>
+        <th colspan="2" class="comment">Comment</th>
       </tr>
     </thead>
     <tbody>

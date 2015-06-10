@@ -39,6 +39,10 @@ define([
     },
 
     deleteNewsletter: function(e) {
+      if ( e ) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
       var self = this;
       self.$el.hide();
       this.model.destroy({
