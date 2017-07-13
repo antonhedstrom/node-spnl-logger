@@ -4,6 +4,9 @@
   "description": "My logger for SPNL related stuff.",
   "homepage": "https://github.com/antonhedstrom/node-spnl-logger",
   "main": "app.js",
+  "engines": {
+    "node": "6.11.1"
+  },
   "directories": {
     "test": "test"
   },
